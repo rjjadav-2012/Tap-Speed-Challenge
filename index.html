@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Tap Speed Challenge</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css" />
+    <meta name="google-site-verification" content="mMYuUWakPlf-nnmVOP5lO1Thg5HTrgde-AoaW4nDrB4" />
+  </head>
+  <body class="sunny-mode">
+    <div id="app">
+      
+      <!-- Dashboard 1: Start Screen -->
+      <div id="dashboard-start" class="dashboard active">
+        <div class="header-section">
+          <h1>TPS <span class="highlight">CHALLENGE</span></h1>
+          <p class="subtitle">Test your absolute limits.</p>
+        </div>
+
+        <div class="controls-section">
+          <div class="mode-toggle-container">
+            <span class="mode-label">Mode:</span>
+            <button id="theme-toggle-btn" class="theme-toggle" aria-label="Toggle Theme">
+              <span class="icon" id="theme-icon">☀️</span> <span id="theme-text">Sunny</span>
+            </button>
+          </div>
+
+          <div class="time-selector-container">
+            <span class="mode-label">Duration:</span>
+            <div class="time-options" id="time-options">
+              <button class="time-btn" data-time="1">1s</button>
+              <button class="time-btn" data-time="2">2s</button>
+              <button class="time-btn" data-time="3">3s</button>
+              <button class="time-btn" data-time="4">4s</button>
+              <button class="time-btn active" data-time="5">5s</button>
+              <button class="time-btn" data-time="10">10s</button>
+              <button class="time-btn manual" data-time="manual">Manual</button>
+            </div>
+          </div>
+          
+          <div class="stats-overview">
+            <div class="stat-box">
+              <span class="stat-label">Global Best TPS</span>
+              <span id="best-tps-display" class="stat-value">0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <button id="start-game-btn" class="primary-btn pulse">START CHALLENGE</button>
+      </div>
+
+      <!-- Dashboard 2: Challenge Arena -->
+      <div id="dashboard-arena" class="dashboard hidden">
+        <div class="arena-header">
+          <div class="hud-item">
+            <span class="hud-label">TIME</span>
+            <span id="hud-time" class="hud-value">5.000</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">TPS</span>
+            <span id="hud-tps" class="hud-value">0.00</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">SCORE</span>
+            <span id="hud-score" class="hud-value">0</span>
+          </div>
+          <button id="abort-btn" class="secondary-btn small">Reset/Back</button>
+        </div>
+        
+        <div class="tap-area-container">
+          <div id="tap-box" class="tap-box">
+             <span id="tap-box-text">TAP HERE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard 3: Results -->
+      <div id="dashboard-results" class="dashboard hidden">
+        <h2 class="results-title">RESULTS</h2>
+        <div class="results-grid">
+          <div class="result-card">
+            <span class="result-label">Total Taps</span>
+            <span id="result-score" class="result-value">0</span>
+          </div>
+          <div class="result-card primary">
+            <span class="result-label">Final TPS</span>
+            <span id="result-tps" class="result-value highlight">0.00</span>
+          </div>
+        </div>
+
+        <div class="ranking-section">
+          <div id="rank-tier" class="rank-tier">[Rank: Sloth]</div>
+          <div id="rank-commentary" class="rank-commentary">Are you even trying?</div>
+        </div>
+
+        <div class="benchmark-section">
+          <div class="benchmark-title">You vs. Average (6.5 TPS)</div>
+          <div class="benchmark-bar-container">
+            <div class="benchmark-track">
+               <!-- The avg indicator -->
+              <div class="benchmark-marker avg-marker" style="left: 46%;">
+                 <span>AVG</span>
+              </div>
+              <div id="benchmark-fill-you" class="benchmark-fill you" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <button id="back-to-menu-btn" class="primary-btn">MAIN MENU</button>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

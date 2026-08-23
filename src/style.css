@@ -1,0 +1,547 @@
+/* ==========================================================================
+   CSS Variables & Theming (Sunny Mode / Darker Mode)
+   ========================================================================== */
+
+:root {
+  /* Base typography */
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* SUNNY MODE (Default) - Vibrant, Clean, Bright */
+  --bg-color: #f7f9fc;
+  --bg-gradient: linear-gradient(135deg, #f7f9fc 0%, #e2e8f0 100%);
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  
+  --panel-bg: rgba(255, 255, 255, 0.7);
+  --panel-border: rgba(255, 255, 255, 0.5);
+  --panel-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.02);
+  --glass-blur: blur(12px);
+
+  --accent-primary: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-glow: rgba(59, 130, 246, 0.4);
+
+  --tap-box-bg: #ffffff;
+  --tap-box-border: #cbd5e1;
+  --tap-box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  --tap-box-active: #e2e8f0;
+  --tap-box-text: #94a3b8;
+
+  --btn-text: #ffffff;
+  --danger-color: #ef4444;
+  --success-color: #10b981;
+}
+
+body.darker-mode {
+  /* DARKER MODE - Sleek, Neon-accented, Premium */
+  --bg-color: #0f172a;
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+
+  --panel-bg: rgba(15, 23, 42, 0.6);
+  --panel-border: rgba(255, 255, 255, 0.05);
+  --panel-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.02);
+
+  --accent-primary: #0ea5e9;
+  --accent-hover: #38bdf8;
+  --accent-glow: rgba(14, 165, 233, 0.6);
+
+  --tap-box-bg: #1e293b;
+  --tap-box-border: #334155;
+  --tap-box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  --tap-box-active: #0f172a;
+  --tap-box-text: #475569;
+
+  --btn-text: #ffffff;
+}
+
+/* ==========================================================================
+   Global Reset & Base Styles
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
+  font-family: var(--font-body);
+  background: var(--bg-gradient);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+h1, h2, h3, .hud-value, .result-value {
+  font-family: var(--font-heading);
+}
+
+button {
+  font-family: var(--font-body);
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Dashboard Visibility & Layout
+   ========================================================================== */
+
+.dashboard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(20px);
+  padding: 2rem;
+}
+
+.dashboard.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.dashboard.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Dashboard 1: Start Screen
+   ========================================================================== */
+
+.header-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header-section h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.header-section h1 .highlight {
+  color: var(--accent-primary);
+  display: block;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.controls-section {
+  background: var(--panel-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--panel-shadow);
+  width: 100%;
+  max-width: 450px;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mode-toggle-container,
+.time-selector-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mode-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--panel-border);
+  color: var(--text-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.time-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.time-btn {
+  background: transparent;
+  border: 1px solid var(--panel-border);
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.time-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.time-btn.active {
+  background: var(--accent-primary);
+  color: var(--btn-text);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.stats-overview {
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--panel-border);
+  padding-top: 1.5rem;
+}
+
+.stat-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+}
+
+/* Buttons */
+.primary-btn {
+  background: var(--accent-primary);
+  color: var(--btn-text);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 1.25rem 3rem;
+  border-radius: 100px;
+  box-shadow: 0 10px 20px var(--accent-glow);
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.primary-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 25px var(--accent-glow);
+}
+
+.primary-btn:active {
+  transform: translateY(1px);
+}
+
+.pulse {
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  70% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+.secondary-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--panel-border);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.secondary-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--text-primary);
+}
+
+
+/* ==========================================================================
+   Dashboard 2: Challenge Arena
+   ========================================================================== */
+
+#dashboard-arena {
+  padding: 0;
+}
+
+.arena-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 10;
+  background: linear-gradient(to bottom, var(--bg-color) 40%, transparent);
+}
+
+.hud-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hud-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+.hud-value {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums; /* Monospace numbers */
+}
+
+#hud-tps { color: var(--accent-primary); }
+#hud-score { color: var(--text-primary); }
+
+.tap-area-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 2rem 2rem 2rem;
+}
+
+.tap-box {
+  width: 100%;
+  max-width: 500px;
+  height: 60vh;
+  min-height: 400px;
+  background: var(--tap-box-bg);
+  border-radius: 30px;
+  border: 2px solid var(--tap-box-border);
+  box-shadow: var(--tap-box-shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.05s ease, background-color 0.1s ease;
+}
+
+.tap-box:active {
+  transform: scale(0.98);
+  background: var(--tap-box-active);
+}
+
+#tap-box-text {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--tap-box-text);
+  letter-spacing: 4px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+
+/* ==========================================================================
+   Dashboard 3: Results
+   ========================================================================== */
+
+.results-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+.result-card {
+  background: var(--panel-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--panel-shadow);
+}
+
+.result-card.primary {
+  background: var(--accent-glow);
+  border-color: var(--accent-primary);
+}
+
+.result-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.result-value {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.result-value.highlight {
+  color: var(--accent-primary);
+}
+
+.ranking-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.rank-tier {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.rank-commentary {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.benchmark-section {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 3rem;
+}
+
+.benchmark-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.benchmark-bar-container {
+  width: 100%;
+  position: relative;
+}
+
+.benchmark-track {
+  width: 100%;
+  height: 24px;
+  background: var(--panel-bg);
+  border-radius: 12px;
+  border: 1px solid var(--panel-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.benchmark-fill {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 12px;
+  transition: width 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.benchmark-fill.you {
+  background: var(--accent-primary);
+  z-index: 2;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.benchmark-marker {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background: var(--success-color);
+  z-index: 3;
+}
+.benchmark-marker span {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--success-color);
+}
+
+/* Responsive Tweaks */
+@media (max-width: 600px) {
+  .header-section h1 { font-size: 2.5rem; }
+  .tap-box { height: 50vh; }
+  .arena-header { padding: 1rem; }
+  .hud-value { font-size: 2rem; }
+  .results-grid { grid-template-columns: 1fr; gap: 1rem; }
+}
