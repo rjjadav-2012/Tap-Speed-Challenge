@@ -3,14 +3,14 @@
 
 // Placeholder Firebase Configuration
 // Replace this with your actual Firebase Project Config
-const firebaseConfig = {
-  apiKey: "AIzaSyYOUR_API_KEY_HERE",
-  authDomain: "tapspeedchallenge.firebaseapp.com",
-  projectId: "tapspeedchallenge",
-  storageBucket: "tapspeedchallenge.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef1234567890"
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyYOUR_API_KEY_HERE",
+//   authDomain: "tapspeedchallenge.firebaseapp.com",
+//   projectId: "tapspeedchallenge",
+//   storageBucket: "tapspeedchallenge.appspot.com",
+//   messagingSenderId: "1234567890",
+//   appId: "1:1234567890:web:abcdef1234567890"
+// };
 
 // Initialize Firebase (uncomment to activate)
 // const app = initializeApp(firebaseConfig);
